@@ -3,47 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gomoku</title>
-    <meta http-equiv="refresh" content="0; url=./gomoku/index.html" />
-    <link rel="canonical" href="./gomoku/index.html" />
-    <style>
-      body {
-        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-          "Noto Sans", "PingFang TC", "Microsoft JhengHei", sans-serif;
-        margin: 0;
-        padding: 40px 16px;
-        background: #0b1020;
-        color: #e8ecff;
-      }
-      a {
-        color: #30d5c8;
-      }
-      .card {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 18px 16px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.04);
-      }
-      .muted {
-        opacity: 0.8;
-        font-size: 14px;
-        margin-top: 8px;
-      }
-    </style>
+    <title>五子棋 Gomoku</title>
+    <link rel="stylesheet" href="gomoku/style.css" />
   </head>
   <body>
-    <div class="card">
-      <div>正在前往遊戲頁面…</div>
-      <div class="muted">
-        若未自動跳轉，請點這裡：
-        <a href="./gomoku/index.html">開啟五子棋</a>
-      </div>
+    <div class="app">
+      <header class="header">
+        <div>
+          <h1>五子棋</h1>
+          <div class="sub">15×15｜點擊棋盤落子｜先連成五子者獲勝</div>
+        </div>
+        <div class="controls">
+          <button id="btnRestart" class="btn primary" type="button">重新開始</button>
+          <button id="btnUndo" class="btn" type="button">悔棋</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="boardCard">
+          <div class="statusRow">
+            <div class="status" id="statusText">載入中…</div>
+            <div class="legend">
+              <span class="chip"><span class="dot black"></span> 黑</span>
+              <span class="chip"><span class="dot white"></span> 白</span>
+            </div>
+          </div>
+          <canvas id="board" width="720" height="720" aria-label="五子棋棋盤"></canvas>
+          <div class="hint">
+            小技巧：按住 <kbd>Shift</kbd> 點擊可標記最後一手（方便對局回顧）。
+          </div>
+        </section>
+
+        <aside class="side">
+          <section class="panel">
+            <h2>設定</h2>
+            <label class="row">
+              <span>對戰模式</span>
+              <select id="modeSelect">
+                <option value="pvp" selected>雙人（本機）</option>
+                <option value="ai">人機對戰</option>
+              </select>
+            </label>
+            <label class="row">
+              <span>AI 執棋</span>
+              <select id="aiSideSelect">
+                <option value="2" selected>白（玩家黑先）</option>
+                <option value="1">黑（AI 先手）</option>
+              </select>
+            </label>
+            <label class="row">
+              <span>AI 難度</span>
+              <select id="aiLevelSelect">
+                <option value="easy">簡單</option>
+                <option value="normal" selected>普通</option>
+              </select>
+            </label>
+            <label class="row">
+              <span>棋盤大小</span>
+              <select id="sizeSelect">
+                <option value="15" selected>15 × 15（標準）</option>
+                <option value="13">13 × 13</option>
+                <option value="19">19 × 19</option>
+              </select>
+            </label>
+            <label class="row">
+              <span>勝利條件</span>
+              <select id="winSelect">
+                <option value="5" selected>連 5</option>
+                <option value="6">連 6</option>
+              </select>
+            </label>
+            <div class="row">
+              <span>顯示座標</span>
+              <label class="switch">
+                <input id="toggleCoords" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="row">
+              <span>顯示最後一手</span>
+              <label class="switch">
+                <input id="toggleLast" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>對局</h2>
+            <div class="kv"><div>回合</div><div id="turnText">—</div></div>
+            <div class="kv"><div>步數</div><div id="moveText">0</div></div>
+            <div class="kv"><div>結果</div><div id="resultText">—</div></div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        <span>離線即可玩（純前端）</span>
+      </footer>
     </div>
-    <script>
-      window.location.replace("./gomoku/index.html");
-    </script>
+
+    <script src="gomoku/main.js"></script>
   </body>
 </html>
 
